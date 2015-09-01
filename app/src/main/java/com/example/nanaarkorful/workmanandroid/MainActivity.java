@@ -30,6 +30,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
 
         //tab host and view pager
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         tabHost = (MaterialTabHost)findViewById(R.id.materialTabHost);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
 
@@ -41,6 +42,17 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                 tabHost.setSelectedNavigationItem(position);
             }
         });
+
+        for (int i = 0; i < adapter.getCount(); i++) {
+            tabHost.addTab(
+                    tabHost.newTab()
+                            .setText(adapter.getPageTitle(i))
+                            .setTabListener(this)
+            );
+        }
+
+
+
     }
 
 
@@ -68,7 +80,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
     @Override
     public void onTabSelected(MaterialTab materialTab) {
-
+            viewPager.setCurrentItem(materialTab.getPosition());
     }
 
     @Override
